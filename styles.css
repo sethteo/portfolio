@@ -750,6 +750,61 @@ dd {
   height: auto;
 }
 
+.post-toc {
+  padding: 1.25rem 0;
+  border-block: 1px solid var(--line);
+}
+
+.post-toc ul {
+  list-style: none;
+  padding: 0;
+  margin-top: .65rem;
+}
+
+.post-toc li + li {
+  margin-top: .35rem;
+}
+
+.post-toc a {
+  font-size: .875rem;
+  text-decoration: none;
+}
+
+.post-toc a:hover {
+  text-decoration: underline;
+}
+
+.article-body h2[id] {
+  scroll-margin-top: 9rem;
+}
+
+.article-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: .9rem;
+  line-height: 1.7;
+  text-align: left;
+}
+
+.article-body th,
+.article-body td {
+  padding: .75rem 1rem;
+  border: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.article-body th {
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.article-body td {
+  color: var(--muted);
+}
+
 .sample-note {
   padding: 1rem 1.2rem;
   background: var(--surface);

@@ -39,7 +39,7 @@
         </header>
         <div class="article-body">
           {% if note %}<aside class="sample-note">{{ note | escape }}</aside>{% endif %}
-          {{ content | safe }}
+          {{ content | withTableOfContents(toc) | safe }}
           <p class="article-end"><a href="index.html">← All posts</a> · <a href="../index.html#writing">Back to home</a></p>
         </div>
       </article>
