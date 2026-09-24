@@ -13,3 +13,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Eleventy dependencies and generated site
+node_modules/
+_site/
