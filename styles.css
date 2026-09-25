@@ -848,6 +848,11 @@ dd {
   color: var(--muted);
 }
 
+.article-body td:first-child code {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
 .sample-note {
   padding: 1rem 1.2rem;
   background: var(--surface);
