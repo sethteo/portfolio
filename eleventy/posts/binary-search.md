@@ -2,7 +2,7 @@
 title: "0/1 Search?"
 date: "2026-09-25"
 description: "Binary Search is not that simple after all."
-lead: "A thorough guide on a fundamental algorithm."
+lead: "My guide on a fundamental algorithm."
 topics: ["data structure and algorithms", "leetcode"]
 toc: true
 ---
@@ -87,3 +87,6 @@ def binary_search(arr, timestamp):
 ```
 
 I won't repeat the explanation but we know that once the loop ends `right` is the last index where every value is `<= timestamp`
+
+## Binary Search on Answer
+To be added
