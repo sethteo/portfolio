@@ -4,7 +4,7 @@ date: "2026-09-23"
 description: "First step into the cybersecurity rabbit hole."
 lead: "My first HTB module!"
 toc: true
-topics: ["security", "redside", "learning"]
+topics: ["security", "red team", "learning"]
 note: "Just some background: Have always been interested in the low-level details of computing but never pushed myself to explore them deeply apart from my academic coursework. Hence these posts are just a way for me to document my learning journey and to keep myself accountable."
 ---
 
