@@ -11,6 +11,7 @@ module.exports = class {
         date: post.date.toISOString().slice(0, 10),
         excerpt: post.data.description,
         url: post.url.replace(/^\//, ''),
+        tags: (post.data.topics || []).map(topic => topic.trim().toLowerCase()),
         sample: Boolean(post.data.sample)
       }));
     return `const POSTS = ${JSON.stringify(markdown, null, 2)};\n`;

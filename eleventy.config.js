@@ -3,7 +3,8 @@ module.exports = function (eleventyConfig) {
     templateFormats: ['md']
   });
   eleventyConfig.addFilter('withTableOfContents', require('./eleventy/toc.js'));
-  for (const file of ['index.html', 'styles.css', 'script.js', 'favicon.svg', '.nojekyll', 'blog/index.html']) {
+  eleventyConfig.addFilter('isCtf', topics => (topics || []).some(topic => topic.trim().toLowerCase() === 'ctf'));
+  for (const file of ['index.html', 'styles.css', 'script.js', 'favicon.svg', '.nojekyll', 'blog/index.html', 'ctf/index.html']) {
     eleventyConfig.addPassthroughCopy(file);
   }
   eleventyConfig.addPassthroughCopy('images');

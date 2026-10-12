@@ -375,7 +375,7 @@ p {
   border-bottom: 1px solid var(--line);
 }
 
-.site-header nav a[aria-current="page"] {
+.site-header nav a[aria-current] {
   color: var(--text);
   text-decoration: underline;
   text-decoration-color: var(--accent);

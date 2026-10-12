@@ -1,3 +1,6 @@
+{% set ctfPost = topics | isCtf %}
+{% set archiveUrl = "../ctf/index.html" if ctfPost else "index.html" %}
+{% set archiveLabel = "All CTF write-ups" if ctfPost else "All blog posts" %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +23,8 @@
       <a class="wordmark" href="../index.html" aria-label="Seth Teo home">seth<span>.dev</span></a>
       <nav aria-label="Main navigation">
         <a href="../index.html#experience">Experience</a>
-        <a href="../index.html#writing">Writing</a>
+        <a href="../blog/index.html"{% if not ctfPost %} aria-current="location"{% endif %}>Blog</a>
+        <a href="../ctf/index.html"{% if ctfPost %} aria-current="location"{% endif %}>CTF</a>
         <a href="../index.html#projects">Projects</a>
         <a href="../index.html#skills">Skills</a>
       </nav>
@@ -32,7 +36,7 @@
     <main id="main">
       <article>
         <header class="article-header">
-          <a class="back-link" href="index.html">← All posts</a>
+          <a class="back-link" href="{{ archiveUrl }}">← {{ archiveLabel }}</a>
           <p class="eyebrow"><time datetime="{{ page.date | isoDate }}">{{ page.date | readableDate }}</time></p>
           <h1>{{ title | escape }}</h1>
           {% if lead or (lead is undefined and description) %}<p class="article-lead">{{ (lead if lead is defined else description) | escape }}</p>{% endif %}
@@ -40,7 +44,7 @@
         <div class="article-body">
           {% if note %}<aside class="sample-note">{{ note | escape }}</aside>{% endif %}
           {{ content | withTableOfContents(toc) | safe }}
-          <p class="article-end"><a href="index.html">← All posts</a> · <a href="../index.html#writing">Back to home</a></p>
+          <p class="article-end"><a href="{{ archiveUrl }}">← {{ archiveLabel }}</a> · <a href="../index.html#{{ 'ctf' if ctfPost else 'writing' }}">Back to home</a></p>
         </div>
       </article>
     </main>

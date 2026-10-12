@@ -76,55 +76,27 @@
     return group;
   }
 
-  async function setupFilters(list, posts) {
+  function setupFilters(list, posts) {
     const filters = document.querySelector('[data-tag-filters]');
     const status = document.querySelector('[data-filter-status]');
-    if (!filters || !status || !posts.length) return;
+    if (!filters || !status) return;
     filters.replaceChildren();
-    filters.hidden = true;
-    status.textContent = 'Loading tags…';
-    let failures = 0;
-    const taggedPosts = await Promise.all(posts.map(async post => {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000);
-      try {
-        const response = await fetch(new URL(post.url, siteBase), { signal: controller.signal });
-        if (!response.ok) throw new Error('Post unavailable');
-        const page = new DOMParser().parseFromString(await response.text(), 'text/html');
-        return { ...post, tags: readTags(page) };
-      } catch {
-        failures += 1;
-        return { ...post, tags: [] };
-      } finally {
-        clearTimeout(timeout);
-      }
-    }));
-    const tags = [...new Set(taggedPosts.flatMap(post => post.tags))].sort();
+    const tags = [...new Set(posts.flatMap(post => post.tags || []))]
+      .filter(tag => list.dataset.postKind !== 'ctf' || tag !== 'ctf')
+      .sort();
     const buttons = [];
     function selectTag(tag) {
-      const matching = taggedPosts.filter(post => tag === null || post.tags.includes(tag));
+      const matching = posts.filter(post => tag === null || post.tags.includes(tag));
       renderPostList(list, matching);
       buttons.forEach(item => item.button.setAttribute('aria-pressed', String(item.tag === tag)));
       status.textContent = `${matching.length} ${matching.length === 1 ? 'post' : 'posts'}${tag === null ? '' : ` tagged “${tag}”`}.`;
-      if (failures) {
-        status.append(' Some tags could not be loaded. You can still browse all posts. ');
-        const retry = document.createElement('button');
-        retry.type = 'button';
-        retry.className = 'filter-retry';
-        retry.textContent = 'Retry loading tags';
-        retry.addEventListener('click', () => {
-          renderPostList(list, taggedPosts);
-          setupFilters(list, posts);
-        });
-        status.append(retry);
-      }
     }
     [null, ...tags].forEach(tag => {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'tag-filter';
       const label = document.createElement('span');
-      label.textContent = tag === null ? 'All posts' : tag;
+      label.textContent = tag === null ? 'All' : tag;
       const brackets = ['[', ']'].map(character => {
         const bracket = document.createElement('span');
         bracket.className = 'tag-bracket';
@@ -134,7 +106,7 @@
       });
       const count = document.createElement('span');
       count.className = 'tag-count';
-      count.textContent = String(tag === null ? taggedPosts.length : taggedPosts.filter(post => post.tags.includes(tag)).length);
+      count.textContent = String(tag === null ? posts.length : posts.filter(post => post.tags.includes(tag)).length);
       count.setAttribute('aria-hidden', 'true');
       button.append(brackets[0], label, count, brackets[1]);
       button.addEventListener('click', () => selectTag(tag));
@@ -152,8 +124,13 @@
       .sort((a, b) => b.date.localeCompare(a.date));
 
     document.querySelectorAll('[data-post-list]').forEach(list => {
-      renderPostList(list, posts);
-      if (list.hasAttribute('data-filterable')) setupFilters(list, posts);
+      const selected = posts.filter(post => {
+        const ctf = post.tags?.includes('ctf');
+        return list.dataset.postKind === 'ctf' ? ctf
+          : list.dataset.postKind === 'blog' ? !ctf : true;
+      });
+      renderPostList(list, selected);
+      if (list.hasAttribute('data-filterable')) setupFilters(list, selected);
     });
   }
 
@@ -162,7 +139,7 @@
     list.replaceChildren();
     if (!posts.length) {
       const empty = document.createElement('p');
-      empty.textContent = 'Notes are on the way. Check back soon.';
+      empty.textContent = 'No posts to show yet.';
       list.append(empty);
       return;
     }
@@ -173,6 +150,7 @@
       const content = document.createElement('div');
       const metadata = document.createElement('p');
       metadata.className = 'entry-date';
+      if (post.tags?.includes('ctf')) metadata.append('CTF · ');
       if (post.sample) metadata.append('Sample post · ');
       const date = document.createElement('time');
       date.dateTime = post.date;
@@ -183,13 +161,13 @@
       const title = document.createElement('h3');
       title.textContent = post.title;
       const excerpt = document.createElement('p');
-      excerpt.textContent = post.excerpt;
+      excerpt.textContent = post.excerpt || '';
       const arrow = document.createElement('span');
       arrow.className = 'link-arrow';
       arrow.setAttribute('aria-hidden', 'true');
       arrow.textContent = '↗';
       content.append(metadata, title, excerpt);
-      if (post.tags?.length) content.append(createTags(post.tags));
+      if (post.tags?.length && !list.dataset.limit) content.append(createTags(post.tags));
       link.append(content, arrow);
       list.append(link);
     });

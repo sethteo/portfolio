@@ -21,11 +21,12 @@
       <a class="wordmark" href="index.html" aria-label="Seth Teo home">seth<span>.dev</span></a>
       <nav aria-label="Main navigation">
         <a href="#experience">Experience</a>
-        <a href="#writing">Writing</a>
+        <a href="blog/index.html">Blog</a>
+        <a href="ctf/index.html">CTF</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
       </nav>
-      <button class="theme-toggle" type="button" aria-label="Switch colour theme" hiddœ†en>
+      <button class="theme-toggle" type="button" aria-label="Switch colour theme" hidden>
         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           aria-hidden="true">
           <circle cx="12" cy="12" r="4" />
@@ -97,20 +98,34 @@
         <div class="section-heading heading-with-link">
           <div>
             <p class="eyebrow">02 / Writing</p>
-            <h2 id="writing-title">Personal blog</h2>
+            <h2 id="writing-title">Recent writing</h2>
             <p class="section-intro">Notes on things I’m building and learning.</p>
           </div>
-          <a class="text-link small-link" href="blog/index.html">View all posts <span aria-hidden="true">↗</span></a>
+          <a class="text-link small-link" href="blog/index.html">All blog posts <span aria-hidden="true">↗</span></a>
         </div>
-        <div data-post-list data-limit="3">
+        <div data-post-list data-post-kind="blog" data-limit="3">
           <p>Notes are on the way. Check back soon.</p>
+        </div>
+      </section>
+
+      <section class="section" id="ctf" aria-labelledby="ctf-title">
+        <div class="section-heading heading-with-link">
+          <div>
+            <p class="eyebrow">03 / CTF</p>
+            <h2 id="ctf-title">Recent CTF write-ups</h2>
+            <p class="section-intro">Challenge solutions and what I learned along the way.</p>
+          </div>
+          <a class="text-link small-link" href="ctf/index.html">All CTF write-ups <span aria-hidden="true">↗</span></a>
+        </div>
+        <div data-post-list data-post-kind="ctf" data-limit="3">
+          <p>Write-ups are on the way. Check back soon.</p>
         </div>
       </section>
 
       <section class="section" id="projects" aria-labelledby="projects-title">
         <div class="section-heading heading-with-link">
           <div>
-            <p class="eyebrow">03 / Projects</p>
+            <p class="eyebrow">04 / Projects</p>
             <h2 id="projects-title">Things I’ve built</h2>
           </div>
           <a class="text-link small-link" href="https://github.com/sethteo?tab=repositories">All repositories <span
@@ -127,13 +142,13 @@
 
       <section class="section" id="skills" aria-labelledby="skills-title">
         <div class="section-heading">
-          <p class="eyebrow">04 / Skills &amp; certifications</p>
+          <p class="eyebrow">05 / Skills &amp; certifications</p>
           <h2 id="skills-title">My toolkit</h2>
         </div>
         <dl class="skills-list">
           <div>
             <dt>Languages</dt>
-            <dd>Python, Java, TypeScript, JavaScript, C</dd>
+            <dd>Python, Java, TypeScript, JavaScript, C, Bash</dd>
           </div>
           <div>
             <dt>Frameworks</dt>
