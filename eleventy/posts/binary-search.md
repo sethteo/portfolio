@@ -89,4 +89,87 @@ def binary_search(arr, timestamp):
 I won't repeat the explanation but we know that once the loop ends `right` is the last index where every value is `<= timestamp`
 
 ## Binary Search on Answer
-To be added
+
+Now what if we aren't given a sorted array to search through? Let us see Leetcode question [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/description/)
+
+We are given piles of bananas and `h` hours to finish them. Koko chooses an integer eating speed `k`, and each hour she eats up to `k` bananas from one pile. If she finishes that pile early, she waits until the next hour before starting another one. Our goal is to find the minimum speed that lets her finish in time.
+
+Okay so we can just try every speed starting from `1` and return the first one that works. But how do we check whether a speed works?
+
+### Checking a speed
+
+For a pile with `7` bananas and a speed of `3`, Koko needs `3` hours. Even though the last hour only involves eating one banana, it still counts as a full hour.
+
+So for each pile we divide its size by our speed and round up. We can do this with integer division:
+
+```python
+hours = (pile + speed - 1) // speed
+```
+
+We then add the hours for every pile and check if the total is `<= h`. We have to round up each pile separately because Koko cannot use the leftover time from one pile to start another.
+
+### Finding the condition
+
+Notice how if Koko can finish at a speed of `k`, she can also finish at any speed greater than `k`. Conversely, if a speed is too slow, every smaller speed will also be too slow.
+
+Our condition therefore looks like this as the speed increases:
+
+```text
+Speed:       1      2      3      4     5     6    ...
+Can finish: False  False  False  True  True  True  ...
+```
+
+This should look familiar. We are trying to find the first value that satisfies a condition, which is exactly what we did in lower bound binary search. The difference is that our search space now consists of possible answers instead of array indices. We don't even need to sort `piles`.
+
+### Choosing our bounds
+
+- `left = 1` because this is the smallest positive integer speed.
+- `right = max(piles)` because at this speed every pile takes exactly one hour. The problem guarantees `h >= len(piles)`, so this speed will always work.
+
+Trying every speed would take `O(N * M)` time, where `N` is the number of piles and `M` is the largest pile. Binary search lets us reduce the number of speeds we check to `O(log M)`.
+
+### The solution
+
+```python
+class Solution:
+  def minEatingSpeed(self, piles: list[int], h: int) -> int:
+    left = 1
+    right = max(piles)
+
+    while left <= right:
+      mid = left + ((right - left) // 2)
+      hours = 0
+
+      for pile in piles:
+        hours += (pile + mid - 1) // mid
+
+      if hours <= h:
+        right = mid - 1
+      else:
+        left = mid + 1
+
+    return left
+```
+
+Very similar skeleton again, just with a different check inside our loop:
+
+- If `hours <= h`, our speed works, but a smaller speed might also work. So we move `right = mid - 1` and keep searching.
+- If `hours > h`, our speed is too slow, so we move `left = mid + 1`.
+- We don't return immediately when `hours == h`. A smaller speed might still take the same number of hours because we round up for each pile.
+- Once the pointers cross, `left` is the first speed that works, so we return it.
+
+### Walking through an example
+
+Using `piles = [3, 6, 7, 11]` and `h = 8`, we start with `left = 1` and `right = 11`:
+
+| left | right | mid (speed) | Hours needed | What we do |
+| --- | --- | --- | --- | --- |
+| 1 | 11 | 6 | 1 + 1 + 2 + 2 = 6 | Works, try slower: `right = 5` |
+| 1 | 5 | 3 | 1 + 2 + 3 + 4 = 10 | Too slow: `left = 4` |
+| 4 | 5 | 4 | 1 + 2 + 2 + 3 = 8 | Works, try slower: `right = 3` |
+
+Now `left > right`, and we return `4`.
+
+Each check scans all `N` piles, and we perform `O(log M)` checks. Including the initial scan for `max(piles)`, the runtime is `O(N log(M + 1))`, commonly written as `O(N log M)`. We only store a few variables, so the extra space is `O(1)`.
+
+The main thing I look for here is whether a working answer guarantees that all larger answers also work. If that holds, and I can check a candidate efficiently, I can use binary search to find the first working answer.
