@@ -162,6 +162,8 @@ n0t_mUcH_h4rD3r_tH4n_x0r_0cb705e
 
 Lastly, we can just wrap the result in `academy{...}` to obtain our flag.
 
+[Full solution on GitHub](https://github.com/sethteo/picoctf/blob/e5324f9be2432d5f243fa705a37a0c36c432d5a9/vault-door-training-6/VaultDoor6.java)
+
 ## 5. Flag
 
 ```text

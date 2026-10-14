@@ -234,6 +234,8 @@ A_b1t_0f_b1t_sh1fTiNg_575f3602ad
 
 Wrapping it in `academy{...}` gives us the flag!
 
+[Full solution on GitHub](https://github.com/sethteo/picoctf/blob/e5324f9be2432d5f243fa705a37a0c36c432d5a9/vault-door-training-7/VaultDoor7.java)
+
 ## 5. Flag
 
 ```text

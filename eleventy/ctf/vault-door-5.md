@@ -87,7 +87,9 @@ Which gives us:
 c0nv3rt1ng_fr0m_ba5e_64_e340c3ed
 ```
 
-And that's pretty much it! We can wrap the output in `academy{...}` to obtain our flag.
+We can wrap the output in `academy{...}` to obtain our flag.
+
+[Full solution on GitHub](https://github.com/sethteo/picoctf/blob/e5324f9be2432d5f243fa705a37a0c36c432d5a9/vault-door-training-5/VaultDoor5.java)
 
 ## 4. Flag
 

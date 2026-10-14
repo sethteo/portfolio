@@ -86,6 +86,8 @@ jU5t_4_bUnCh_0f_bYt3s_88a31dad6c
 
 And that's pretty much it! We can just wrap the output in `academy{...}` to obtain our flag.
 
+[Full solution on GitHub](https://github.com/sethteo/picoctf/blob/e5324f9be2432d5f243fa705a37a0c36c432d5a9/vault-door-training-4/VaultDoor4.java)
+
 ## 4. Flag
 
 ```text

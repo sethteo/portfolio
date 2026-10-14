@@ -195,6 +195,7 @@ And that's the solution! By applying `reverse()` to the expected array and print
 ```text
 s0m3_m0r3_b1t_sh1fTiNg_14c0f2f11
 ```
+[Full solution on GitHub](https://github.com/sethteo/picoctf/blob/e5324f9be2432d5f243fa705a37a0c36c432d5a9/vault-door-training-8/VaultDoor8.java)
 
 ## 5. Flag
 
