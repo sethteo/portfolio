@@ -44,20 +44,25 @@
 
   applyTheme(preference || (systemTheme.matches ? 'light' : 'dark'));
 
-  document.addEventListener('DOMContentLoaded', () => {
+  function initPage() {
     renderPosts();
     const articleHeader = document.querySelector('article .article-header');
-    if (articleHeader) articleHeader.append(createTags(readTags(document)));
+    if (articleHeader && !articleHeader.querySelector('.post-tags')) {
+      articleHeader.append(createTags(readTags(document)));
+    }
     const button = document.querySelector('.theme-toggle');
     if (!button) return;
     button.hidden = false;
     applyTheme(root.dataset.theme);
-    button.addEventListener('click', () => {
+    button.onclick = () => {
       preference = root.dataset.theme === 'dark' ? 'light' : 'dark';
       saveTheme(preference);
       applyTheme(preference);
-    });
-  });
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', initPage);
+  document.addEventListener('site:navigated', initPage);
 
   function readTags(page) {
     const tags = page.querySelector('meta[name="post-tags"]')?.content || '';
