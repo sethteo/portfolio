@@ -84,6 +84,12 @@ button:focus-visible {
   border-radius: 2px;
 }
 
+/* SPA navigation focuses content for accessibility; only show its outline for keyboard navigation. */
+main[tabindex="-1"]:focus:not(:focus-visible),
+main [tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
 button {
   font: inherit;
 }
