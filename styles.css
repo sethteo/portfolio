@@ -602,6 +602,36 @@ p {
   margin-top: .4rem;
 }
 
+.education-entry {
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.education-entry h4 {
+  margin: 0 0 .35rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.education-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .25rem 1.5rem;
+  font-size: .925rem;
+}
+
+.education-gpa {
+  font: .8rem/1.8 var(--mono);
+}
+
+.education-focus {
+  margin-top: .35rem;
+  font-size: .925rem;
+}
+
 .skills-list>div {
   display: grid;
   grid-template-columns: 165px 1fr;
@@ -619,6 +649,7 @@ dd {
   color: var(--muted);
 }
 
+.background-group + .background-group,
 .certifications {
   margin-top: 1.8rem;
 }
