@@ -1,6 +1,10 @@
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(require('@11ty/eleventy-plugin-syntaxhighlight'), {
-    templateFormats: ['md']
+    templateFormats: ['md'],
+    init: ({ Prism }) => {
+      require('prismjs/components/prism-nasm');
+      Prism.languages.asm = Prism.languages.nasm;
+    }
   });
   eleventyConfig.addFilter('withTableOfContents', require('./eleventy/toc.js'));
   eleventyConfig.addFilter('isCtf', topics => (topics || []).some(topic => topic.trim().toLowerCase() === 'ctf'));
